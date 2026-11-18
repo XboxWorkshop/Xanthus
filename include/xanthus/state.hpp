@@ -80,29 +80,30 @@ public:
     static State& instance() {
         static State obj;
         return obj;
-    };
+    }
 
     SET_GETTER(bool,   Vsync,        vsync_,      truthy); // applies on next swapchain check
     SET_GETTER(double, TargetFPS,    fpsTarget_,  fps);
-    SET_GETTER(double, WindowWidth,  width_,      width);
-    SET_GETTER(double, WindowHeight, height_,     height);
+    SET_GETTER(int, WindowWidth,  width_,      width);
+    SET_GETTER(int, WindowHeight, height_,     height);
     SET_GETTER(double, ResolutionScale, resScale_, scale);
-    SET_GETTER(float,         Brightness, brightness_, brightness);
+    SET_GETTER(float,  Brightness, brightness_, brightness);
+    SET_GETTER(int,    AnisotropicFiltering, aniFilter_, mult);
 
     SET_GETTER(bool,   DisplayFPS, fpsDisplay_, truthy);
     SET_GETTER(bool,   DynamicResolution, dynamicRes_, truthy);
 
-    SET_GETTER(std::uint32_t, AspectRatio, aspectRatio_, ratio);
-    //SET_GETTER(std::uint32_t, GApi,        gApi_,        api); 
+    SET_GETTER(EAspectRatio, AspectRatio, aspectRatio_, ratio);
 private:
-    std::uint32_t aspectRatio_;
-    float brightness_;
-    double fpsTarget_;
-    double width_;
-    double height_;
-    double resScale_;
-    bool vsync_;
-    bool fpsDisplay_;
-    bool dynamicRes_;
+    EAspectRatio aspectRatio_ = EAspectRatio::Original;
+    float brightness_ = 1.0f;
+    double fpsTarget_ = 30;
+    int width_ = 640;
+    int height_ = 480;
+    double resScale_ = 1.0;
+    bool vsync_ = false;
+    bool fpsDisplay_ = false;
+    bool dynamicRes_ = false;
+    int aniFilter_ = 1;
 };
 }

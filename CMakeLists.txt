@@ -53,8 +53,7 @@ target_include_directories(xanthus PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/plume
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/unordered_dense/include
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/fmt/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/recomp/XShaderRecomp/XShaderRecomp/
-
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/XShaderRecomp/XShaderRecomp/
 )
 
 target_include_directories(xanthus PUBLIC

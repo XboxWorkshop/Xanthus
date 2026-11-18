@@ -4372,7 +4372,7 @@ static void ComputeViewportSize()
 		numerator = width;
 		denominator = height;
 	} else {
-		switch ((EAspectRatio)State::instance().getAspectRatio())
+		switch (State::instance().getAspectRatio())
 		{
 		case EAspectRatio::Narrow5x4:
 			numerator = 5;
@@ -6809,7 +6809,7 @@ static void ProcSetTextureStageState(const RenderCommand& cmd)
 	const bool isLinear = rawMinFilter == X_D3DTEXF_LINEAR || rawMinFilter == X_D3DTEXF_ANISOTROPIC;
 
 	// the game has no mipmaps, but anisotropy still help so...
-	const bool anisotropyEnabled = Config::AnisotropicFiltering > 1 && isLinear;
+	const bool anisotropyEnabled = xanthus::State::instance().getAnisotropicFiltering() > 1 && isLinear;
 
 	auto& samplerDesc = g_samplerDescs[args.index];
 
@@ -6821,7 +6821,7 @@ static void ProcSetTextureStageState(const RenderCommand& cmd)
 	SetDirtyValue(dirtySampler, samplerDesc.minFilter, minFilter);
 	SetDirtyValue(dirtySampler, samplerDesc.magFilter, magFilter);
 	SetDirtyValue(dirtySampler, samplerDesc.mipmapMode, RenderMipmapMode(mipFilter));
-	SetDirtyValue(dirtySampler, samplerDesc.maxAnisotropy, anisotropyEnabled ? Config::AnisotropicFiltering : 16u);
+	SetDirtyValue(dirtySampler, samplerDesc.maxAnisotropy, anisotropyEnabled ? xanthus::State::instance().getAnisotropicFiltering() : 16u);
 	SetDirtyValue(dirtySampler, samplerDesc.anisotropyEnabled, anisotropyEnabled);
 	SetDirtyValue(dirtySampler, samplerDesc.maxLOD, maxLOD);
 	SetDirtyValue(dirtySampler, samplerDesc.borderColor, borderColor);
