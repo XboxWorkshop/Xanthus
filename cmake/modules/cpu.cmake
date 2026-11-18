@@ -1,0 +1,5 @@
+set(XANTHUS_CPU_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/cpu)
+
+list(APPEND XANTHUS_SOURCES
+    "${XANTHUS_CPU_SRC}/guest_thread.cpp"
+)

@@ -1,0 +1,6 @@
+set(XANTHUS_INPUT_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/input)
+
+list(APPEND XANTHUS_SOURCES
+    "${XANTHUS_INPUT_SRC}/input.cpp"
+    "${XANTHUS_INPUT_SRC}/pjs.cpp"
+)
