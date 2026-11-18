@@ -1,0 +1,15 @@
+[submodule "vendor/DirectX-Headers"]
+	path = vendor/DirectX-Headers
+	url = https://github.com/microsoft/DirectX-Headers
+[submodule "vendor/fmt"]
+	path = vendor/fmt
+	url = https://github.com/fmtlib/fmt
+[submodule "vendor/plume"]
+	path = vendor/plume
+	url = https://github.com/renderbag/plume
+[submodule "vendor/unordered_dense"]
+	path = vendor/unordered_dense
+	url = https://github.com/martinus/unordered_dense
+[submodule "vendor/XShaderRecomp"]
+	path = vendor/XShaderRecomp
+	url = https://github.com/FoxWorkshop/XShaderRecomp

@@ -17,14 +17,14 @@ endif()
 # Vendored
 # =============================================================================
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../vendor/plume ${CMAKE_BINARY_DIR}/plume)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../vendor/DirectX-Headers ${CMAKE_BINARY_DIR}/dx_headers)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../vendor/unordered_dense ${CMAKE_BINARY_DIR}/unordered_dense)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../vendor/fmt ${CMAKE_BINARY_DIR}/fmt)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../recomp/XShaderRecomp ${CMAKE_BINARY_DIR}/shader_recomp)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/plume ${CMAKE_BINARY_DIR}/plume)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/DirectX-Headers ${CMAKE_BINARY_DIR}/dx_headers)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/unordered_dense ${CMAKE_BINARY_DIR}/unordered_dense)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/fmt ${CMAKE_BINARY_DIR}/fmt)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/XShaderRecomp ${CMAKE_BINARY_DIR}/shader_recomp)
 
 target_include_directories(plume PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/../vendor/DirectX-Headers/include/dxguids
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/DirectX-Headers/include/dxguids
 )
 
 # =============================================================================
@@ -50,10 +50,10 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/shaders.cmake)
 
 target_include_directories(xanthus PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/../vendor/plume
-    ${CMAKE_CURRENT_SOURCE_DIR}/../vendor/unordered_dense/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/../vendor/fmt/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/../recomp/XShaderRecomp/XShaderRecomp/
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/plume
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/unordered_dense/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/fmt/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/recomp/XShaderRecomp/XShaderRecomp/
 
 )
 
