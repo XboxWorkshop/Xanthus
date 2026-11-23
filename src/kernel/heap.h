@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <utility>
 #include <stddef.h>
+#include "o1heap.h"
 
 struct Heap
 {
