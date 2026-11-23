@@ -19,7 +19,9 @@ struct GuestThreadParams
 
 struct GuestThreadContext
 {
+#if XANTHUS_RECOMP
     X86Context x86Context{};
+#endif
     uint8_t* thread = nullptr;
 
     GuestThreadContext(GuestThreadParams params);

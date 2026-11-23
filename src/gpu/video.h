@@ -6,6 +6,9 @@
 #include <plume_render_interface.h>
 #include "ankerl/unordered_dense.h"
 #include "lib/vertex_declaration.h"
+#include "platform/mutex.h"
+#define XXH_INLINE_ALL
+#include "external/xxhash.h"
 
 #define D3DCLEAR_TARGET  0x1
 #define D3DCLEAR_ZBUFFER 0x10

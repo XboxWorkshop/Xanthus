@@ -2,6 +2,9 @@
 #include "swizzle.h"
 #include <input/input.h>
 #include <kernel/function.h>
+#include <kernel/memory.h>
+#include <kernel/heap.h>
+#include "platform/compat.h"
 #include "guest_convert.h"
 #include "render_commands.h"
 #include "xanthus/gpu/vertexshader.h"

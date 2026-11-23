@@ -1,6 +1,4 @@
-#ifdef _MSC_VER
-#include <stdafx.h>
-#endif
+#include <platform/compat.h>
 #include <kernel/kernel.h>
 #include "guest_thread.h"
 #include <kernel/memory.h>
@@ -320,11 +318,10 @@ uint32_t GuestThread::GetCurrentThreadEntry()
 
 uint32_t GuestThread::Start(const GuestThreadParams& params)
 {
-
+#if XANTHUS_RECOMP
 	//const auto procMask = (uint8_t)(params.flags >> 24);
 	g_currentThreadEntry = params.function;
 	GuestThreadContext ctx(params);
-
 	//ctx.x86Context.esp.u32 = (ctx.x86Context.esp.u32 - 16) & ~0xF;
 	// 
 	auto base = g_memory.base;
@@ -335,6 +332,9 @@ uint32_t GuestThread::Start(const GuestThreadParams& params)
 	ctx.x86Context.esp.u32 -= 4; //in x86, the CPU always adjust the stack pointer by 4 bytes before calling a function
 	g_memory.FindFunction(params.function)(ctx.x86Context, g_memory.base); 	//call function, if it crashes there the function was most likely not found in the map array
 	return ctx.x86Context.eax.u32;
+#else
+	return 0; // TODO
+#endif
 }
 
 #ifdef _WIN32

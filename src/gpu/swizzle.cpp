@@ -3,6 +3,7 @@
 #include <kernel/heap.h>
 #include <algorithm>
 #include <xanthus/utility.hpp>
+#include "platform/compat.h"
 
 /*Xbox uses a swizzle method for textures, this is a memory layout optimization used by GPUs, instead of storing pixels in
 row-major order (line by line), the Xbox stores them in a Morton order (Z-order curve)  for better texture cache locality

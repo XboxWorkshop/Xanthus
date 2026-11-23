@@ -10,6 +10,8 @@
 #include <xanthus/utility.hpp>
 #include <mutex>
 
+Heap g_userHeap;
+
 constexpr size_t XBE_END_ADDR = 0x006A1000ull;
 constexpr size_t HEAP_BEGIN = XBE_END_ADDR + 0x1000000; //Start heap way after XBE
 constexpr size_t HEAP_END = 0xA0000000;

@@ -27,7 +27,16 @@ include("${CMAKE_CURRENT_SOURCE_DIR}/vendor/XShaderRecomp/XShaderRecomp/fixed_fu
 if(CMAKE_HOST_WIN32)
     set(DIRECTX_DXC_TOOL "${CMAKE_CURRENT_SOURCE_DIR}/vendor/XShaderRecomp/thirdparty/dxc-bin/bin/x64/dxc.exe")
 elseif(CMAKE_HOST_LINUX)
-    set(DIRECTX_DXC_TOOL "${CMAKE_CURRENT_SOURCE_DIR}/vendor/XShaderRecomp/thirdparty/dxc-bin/bin/x64/dxc-linux")
+    set(DXC_REAL    "${CMAKE_CURRENT_SOURCE_DIR}/vendor/XShaderRecomp/thirdparty/dxc-bin/bin/x64/dxc-linux")
+    set(DXC_LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/vendor/XShaderRecomp/thirdparty/dxc-bin/lib/x64")
+    configure_file(
+        "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/dxc-linux.sh.in"
+        "${CMAKE_BINARY_DIR}/dxc-linux.sh"
+        @ONLY
+        FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
+                         GROUP_READ GROUP_EXECUTE
+                         WORLD_READ WORLD_EXECUTE)
+    set(DIRECTX_DXC_TOOL "${CMAKE_BINARY_DIR}/dxc-linux.sh")
 elseif(CMAKE_HOST_APPLE)
     set(DIRECTX_DXC_TOOL "${CMAKE_CURRENT_SOURCE_DIR}/vendor/XShaderRecomp/thirdparty/dxc-bin/bin/x64/dxc-macos")
 else()

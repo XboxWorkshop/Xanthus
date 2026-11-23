@@ -10,6 +10,7 @@
 #include "ubershaders/fixed_function_vertex_shader_variants.h"
 #include <kernel/function.h>
 #include "xanthus/gpu/vertexshader.h"
+#include "platform/compat.h"
 
 // original code (mostly) re used from CXBX Reloaded
 // Since modern API don't have a fixed function pipeline, we have to emulate it ourselves using shaders.
@@ -422,14 +423,14 @@ static_assert(sizeof(PointSprite) == 32);
 
 struct FixedFunctionVertexShaderState
 {
-	Transforms Transforms;
+	Transforms transforms;
 	Light Lights[8];
 	TwoSidedColor TotalLightsAmbient; // c104 - c105
 	Material Materials[2]; // c106 - c115
 	Modes Modes; // c116 - c119
 	Fog Fog; // c120 - c121
 	TextureState TextureStates[4]; // c122 - c125;
-	PointSprite PointSprite; // c126 - c127
+	PointSprite pSprite; // c126 - c127
 	float TexCoordComponentCount[4]; // c128
 };
 
@@ -600,18 +601,18 @@ static void RecomputeFixedFunctionTransforms()
 
 	const auto upload = [vulkan](const D3DMATRIX& m) { return vulkan ? m : MatrixTranspose(m); };
 
-	ffShaderState.Transforms.Projection = upload(g_Transforms[X_D3DTS_PROJECTION]);
-	ffShaderState.Transforms.View = upload(g_Transforms[X_D3DTS_VIEW]);
+	ffShaderState.transforms.Projection = upload(g_Transforms[X_D3DTS_PROJECTION]);
+	ffShaderState.transforms.View = upload(g_Transforms[X_D3DTS_VIEW]);
 
 	for (unsigned i = 0; i < 4; i++)
 	{ // TODO : Would it help to limit this to just the active texture channels?
-		ffShaderState.Transforms.Texture[i] = upload(g_Transforms[X_D3DTS_TEXTURE0 + i]);
+		ffShaderState.transforms.Texture[i] = upload(g_Transforms[X_D3DTS_TEXTURE0 + i]);
 	}
 
 	for (unsigned i = 0; i < ffShaderState.Modes.VertexBlend_NrOfMatrices; i++)
 	{
-		ffShaderState.Transforms.WorldView[i] = upload(*GetWorldView(i));
-		ffShaderState.Transforms.WorldViewInverseTranspose[i] = upload(*GetWorldViewInverseTranspose(i));
+		ffShaderState.transforms.WorldView[i] = upload(*GetWorldView(i));
+		ffShaderState.transforms.WorldViewInverseTranspose[i] = upload(*GetWorldViewInverseTranspose(i));
 	}
 }
 
@@ -624,7 +625,7 @@ ShaderVariantKey UpdateFixedFunctionVertexShaderState(size_t Handle, bool isPSFi
 		{
 			RecomputeFixedFunctionTransforms();
 			constexpr int transformRegisters = sizeof(Transforms) / 16;
-			CopyVertexShaderConstant(0, (DWORD*)&ffShaderState.Transforms, transformRegisters);
+			CopyVertexShaderConstant(0, (DWORD*)&ffShaderState.transforms, transformRegisters);
 			g_fixedFunctionVertexShaderTransformsDirty = false;
 		}
 
@@ -697,14 +698,14 @@ ShaderVariantKey UpdateFixedFunctionVertexShaderState(size_t Handle, bool isPSFi
 	// Make sure to disable point scaling when point sprites are not enabled
 	PointScaleEnable &= PointSpriteEnable;
 	// Set variables in shader state
-	ffShaderState.PointSprite.PointSize = PointSpriteEnable ? pointSize : 1.0f;
-	ffShaderState.PointSprite.PointSize_Min = PointSpriteEnable ? pointSize_Min : 1.0f;
-	ffShaderState.PointSprite.PointSize_Max = PointSpriteEnable ? pointSize_Max : 1.0f;
-	ffShaderState.PointSprite.PointScaleABC.x = PointScaleEnable ? pointScale_A : 1.0f;
-	ffShaderState.PointSprite.PointScaleABC.y = PointScaleEnable ? pointScale_B : 0.0f;
-	ffShaderState.PointSprite.PointScaleABC.z = PointScaleEnable ? pointScale_C : 0.0f;
-	ffShaderState.PointSprite.XboxRenderTargetHeight = PointScaleEnable ? renderTargetHeight : 1.0f;
-	ffShaderState.PointSprite.PointScaleABC.w = g_RenderUpscaleFactor; //renderUpscale in in pos w
+	ffShaderState.pSprite.PointSize = PointSpriteEnable ? pointSize : 1.0f;
+	ffShaderState.pSprite.PointSize_Min = PointSpriteEnable ? pointSize_Min : 1.0f;
+	ffShaderState.pSprite.PointSize_Max = PointSpriteEnable ? pointSize_Max : 1.0f;
+	ffShaderState.pSprite.PointScaleABC.x = PointScaleEnable ? pointScale_A : 1.0f;
+	ffShaderState.pSprite.PointScaleABC.y = PointScaleEnable ? pointScale_B : 0.0f;
+	ffShaderState.pSprite.PointScaleABC.z = PointScaleEnable ? pointScale_C : 0.0f;
+	ffShaderState.pSprite.XboxRenderTargetHeight = PointScaleEnable ? renderTargetHeight : 1.0f;
+	ffShaderState.pSprite.PointScaleABC.w = g_RenderUpscaleFactor; //renderUpscale in in pos w
 
 	// Fog
 	// Determine how the fog depth is transformed into the fog factor
@@ -719,7 +720,7 @@ ShaderVariantKey UpdateFixedFunctionVertexShaderState(size_t Handle, bool isPSFi
 	// Determine how fog depth is calculated
 	if (fogEnable && fogTableMode != D3DFOG_NONE)
 	{
-		auto proj = &ffShaderState.Transforms.Projection;
+		auto proj = &ffShaderState.transforms.Projection;
 
 		if (GetGuestRenderState(X_D3DRS_RANGEFOGENABLE))
 		{

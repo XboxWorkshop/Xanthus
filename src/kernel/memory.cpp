@@ -8,6 +8,8 @@
 #include "x86_context.h"
 #endif
 
+Memory g_memory;
+
 Memory::Memory()
 {
 #ifdef _WIN32

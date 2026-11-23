@@ -17,4 +17,6 @@ void DestructResource(GuestResource* resource)
 	AddDestructResource(resource);
 }
 
+#if XANTHUS_RECOMP
 GUEST_FUNCTION_HOOK_STDCALL(sub_3D5DB0, DestructResource);
+#endif

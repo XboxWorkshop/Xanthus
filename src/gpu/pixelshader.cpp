@@ -3,8 +3,7 @@
 #include <map>
 #include "renderstate.h"
 #include "render_commands.h"
-
-
+#include "platform/compat.h"
 
 // Original code (mostly) re-used from CXBX Reloaded
 

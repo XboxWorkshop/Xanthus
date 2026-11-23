@@ -124,7 +124,9 @@ typedef struct PGRAPHState {
 } PGRAPHState;
 
 typedef struct NV2AState {
+#if XANTHUS_RECOMP
 	void(*vblank_cb)(void*, X86Context*);
+#endif
 	uint64_t vblank_last;
 
 	bool exiting;

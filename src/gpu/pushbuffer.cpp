@@ -2,6 +2,8 @@
 #include "vertexdeclaration.h"
 #include "xanthus/gpu/vertexshader.h"
 #include <kernel/function.h>
+#include <kernel/heap.h>
+#include <kernel/memory.h>
 #include <xanthus/utility.hpp>
 
 // Xbox originally supports immediate drawing by sending some kind of command queue to the GPU directly, bypassing the need of 
@@ -61,6 +63,7 @@ void HLE_draw_inline_array(X_D3DPRIMITIVETYPE primitiveMode, int32_t VertexCount
 	}
 }
 
+#if XANTHUS_RECOMP
 void ClearWithQuadsMidAsmHook(X86Context& __restrict ctx, uint8_t* base)
 {
 
@@ -97,7 +100,6 @@ void RasterRenderQuadMidAsmHook(X86Context& __restrict ctx, uint8_t* base)
 
 	HLE_draw_inline_array(primitiveMode, 4, RasterRenderQuadVertex);
 }
-
 
 const int32_t dword_55FDEC = 0x55FDEC;  //used to detect the flag for stride 24 vs 16
 // This is used to draw the homing attack or spin dash aura, as well as shooting from guns.
@@ -136,7 +138,6 @@ void _XbSubmitNodeMidAsmHook(X86Context& __restrict ctx, uint8_t* base)
 
 	HLE_draw_inline_array(primitiveType, vertexCount, SubmitNodeQuadVertex);
 }
-
 
 //this is needed so weighted characters have proper textures / material color, and lighting.
 // no push function used here, so we just copy constants.
@@ -196,7 +197,7 @@ void _rpSkinXboxSetMaterialColor(int32_t a1addr, int32_t a2)
 
 	CopyVertexShaderConstant(COLOR_CONST, (DWORD*)g_VSConstants, 1);
 }
-
+#endif
 
 // Begin and End push are essentially command system like DX12, this can be used for many things including draw.
 // this patch here just make it so it won't crash when the game calls that.
@@ -217,8 +218,9 @@ void D3DDevice_EndPush(DWORD* pPush)
 	}
 }
 
-
+#if XANTHUS_RECOMP
 GUEST_FUNCTION_HOOK_STDCALL(sub_3D4740, D3DDevice_BeginPush);
 GUEST_FUNCTION_HOOK_STDCALL(sub_3D4760, D3DDevice_EndPush);
 
 GUEST_FUNCTION_HOOK(sub_2C51C0, _rpSkinXboxSetMaterialColor);
+#endif

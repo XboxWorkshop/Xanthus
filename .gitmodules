@@ -13,3 +13,9 @@
 [submodule "vendor/XShaderRecomp"]
 	path = vendor/XShaderRecomp
 	url = https://github.com/FoxWorkshop/XShaderRecomp
+[submodule "vendor/SDL_mixer"]
+	path = vendor/SDL_mixer
+	url = https://github.com/libsdl-org/SDL_mixer.git
+[submodule "vendor/smolv"]
+	path = vendor/smolv
+	url = https://github.com/aras-p/smol-v

@@ -194,6 +194,10 @@ const RenderStateInfo DxbxRenderStateInfo[1 + X_D3DRS_DONOTCULLUNCOMPRESSED] = {
 	{ "D3DRS_DONOTCULLUNCOMPRESSED"       /*= 166*/, 3911, xtBOOL,                0 } // Verified present in 3944
 };
 
+#ifndef X86_CODE_D3D8V
+#error "X86_CODE_D3D8V is not defined. Check that you gave Xanthus access to your recompiled output directory (x86/). If integrating into a decompilation port, you will need to set it manually after deriving from your game's XBE."
+#endif
+
 bool IsRenderStateAvailableInCurrentXboxD3D8Lib(RenderStateInfo& aRenderStateInfo)
 {
 	bool bIsRenderStateAvailable = (aRenderStateInfo.V <= X86_CODE_D3D8V);
@@ -371,6 +375,6 @@ void InitGuestRenderStatePointer(uint32_t* ptr)
 	g_renderState = (uint32_t*)ptr;
 }
 
-
-
+#if XANTHUS_RECOMP
 GUEST_FUNCTION_HOOK_FASTCALL(sub_3D2420, D3DDevice_SetRenderState_Simple);
+#endif

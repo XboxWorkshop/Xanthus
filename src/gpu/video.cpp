@@ -6,7 +6,7 @@
 #include "imgui/imgui_font_builder.h"
 #endif
 #define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "external/stb_image_write.h"
+#include "external/stb/stb_image_write.h"
 
 #include "vertexdeclaration.h"
 #include "xanthus/gpu/vertexshader.h"
