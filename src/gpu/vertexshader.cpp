@@ -6,12 +6,15 @@
 #include "nv2a.h"
 #include "renderstate.h"
 #include <kernel/function.h>
+#include <kernel/heap.h>
+#include "kernel/memory.h"
 #include <xanthus/utility.hpp>
 #include "pixelshader.h"
 #include "pipeline.h"
 #include "render_commands.h"
 #include "FixedFunction.h"
 #include <bit>
+#include <platform/compat.h>
 
 
 // Original code (mostly) re-used from CXBX Reloaded

@@ -87,6 +87,7 @@ const uint32_t g_cameraAddr = 0x540C40;
 #include "shader/R2D_vs1.hlsl.spirv.h"
 #include <xanthus/utility.hpp>
 #include <platform/process.h>
+#include <platform/compat.h>
 #include <deque>
 #include <fstream>
 #include <filesystem>
@@ -6829,7 +6830,7 @@ static void ProcSetTextureStageState(const RenderCommand& cmd)
 	if (dirtySampler)
 	{
 		auto& [descriptorIndex, sampler] = g_samplerStates[XXH3_64bits(&samplerDesc, sizeof(RenderSamplerDesc))];
-		if (descriptorIndex == NULL)
+		if (sampler == nullptr)
 		{
 			descriptorIndex = g_samplerStates.size();
 			sampler = g_device->createSampler(samplerDesc);

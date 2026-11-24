@@ -1,6 +1,8 @@
 #pragma once
 
 #include <cassert>
+#include <cstddef>
+#include <cstdint>
 
 #ifndef _WIN32
 #define MEM_COMMIT  0x00001000  
@@ -24,7 +26,7 @@ struct Memory
 
     bool IsInMemoryRange(const void* host) const noexcept
     {
-        return host >= base && host < (base + X86_MEMORY_SIZE);
+        return host >= base && host < (base + 0x100000000ull);
     }
 
     void* Translate(size_t offset) const noexcept

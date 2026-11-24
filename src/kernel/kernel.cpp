@@ -1,6 +1,5 @@
-#ifdef _MSC_VER
-#include <stdafx.h>
-#endif
+#include "platform/compat.h"
+
 #include "xbox.h"
 #include "kernel.h"
 #include "freelist.h"

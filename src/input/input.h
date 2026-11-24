@@ -109,8 +109,8 @@ namespace input
         Count
     };
 
-    using PadBindings = std::array<ConfigDef<EPadButton>*, (size_t)EXboxButton::Count>;
-    using PadButtonValues = std::array<uint8_t, (size_t)EPadButton::Count>;
+    using PadBindings = std::array<ConfigDef<xanthus::EPadButton>*, (size_t)xanthus::EXboxButton::Count>;
+    using PadButtonValues = std::array<uint8_t, (size_t)xanthus::EPadButton::Count>;
 
     const PadBindings& GetPadBindings(uint32_t playerIndex);
     EInputDevice GetPadDevice(uint32_t playerIndex);

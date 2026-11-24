@@ -171,6 +171,7 @@ static void AppendUtf8(std::string& out, uint32_t c)
     }
 }
 
+#if XANTHUS_RECOMP
 constexpr uint32_t g_ResourceManager = 0x541C5C;
 
 // Helper function to get the slot of the first BON inside a loaded .one file, returns 0 if it had none.
@@ -214,3 +215,4 @@ static uint32_t FindBonSlot(uint8_t* base, uint32_t archive)
 
     return 0;
 }
+#endif

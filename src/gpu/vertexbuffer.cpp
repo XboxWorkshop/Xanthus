@@ -4,7 +4,8 @@
 #include <gpu/vertexbuffer.h>
 #include <external/rapidhash.h>
 #include <xxHashMap.h>
-
+#include <kernel/memory.h>
+#include <kernel/heap.h>
 
 std::unordered_map<GuestBuffer*, std::vector<DerivedVertexBuffer>> VBsList;
 X_STREAMINPUT g_Xbox_SetStreamSource[X_VSH_MAX_STREAMS];

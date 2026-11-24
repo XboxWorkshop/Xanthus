@@ -1,12 +1,11 @@
-#ifdef _MSC_VER
-#include <stdafx.h>
-#endif
+#include "platform/compat.h"
+
 #include <array>
 #include <SDL3/SDL.h>
 #include "input.h"
 #include <kernel/function.h>
 #include <string>
-#include <sdl_events.h>
+#include <SDL/SDL_events.h>
 #include <xanthus/utility.hpp>
 
 input::EInputDevice input::g_inputDevice;
@@ -183,15 +182,15 @@ public:
 		return controller;
 	}
 
-	uint8_t GetButtonValue(EPadButton button) const
+	uint8_t GetButtonValue(xanthus::EPadButton button) const
 	{
 		switch (button)
 		{
-		case EPadButton::LeftTrigger:
+		case xanthus::EPadButton::LeftTrigger:
 			return (uint8_t)std::clamp(SDL_GetGamepadAxis(controller, SDL_GAMEPAD_AXIS_LEFT_TRIGGER) / 128, 0, 255);
-		case EPadButton::RightTrigger:
+		case xanthus::EPadButton::RightTrigger:
 			return (uint8_t)std::clamp(SDL_GetGamepadAxis(controller, SDL_GAMEPAD_AXIS_RIGHT_TRIGGER) / 128, 0, 255);
-		case EPadButton::None:
+		case xanthus::EPadButton::None:
 			return 0;
 		default:
 			return SDL_GetGamepadButton(controller, (SDL_GamepadButton)button) ? 0xFF : 0;
@@ -281,9 +280,9 @@ static void MapPadButtons(const PadSnapshot& snapshot, uint32_t playerIndex, XIN
 	}
 
 	// touchpad is back if unbound
-	auto isTouchpadBound = std::any_of(bindings.begin(), bindings.end(), [](auto* binding) { return binding->Value == EPadButton::Touchpad; });
+	auto isTouchpadBound = std::any_of(bindings.begin(), bindings.end(), [](auto* binding) { return binding->Value == xanthus::EPadButton::Touchpad; });
 
-	if (!isTouchpadBound && snapshot.buttons[(size_t)EPadButton::Touchpad])
+	if (!isTouchpadBound && snapshot.buttons[(size_t)xanthus::EPadButton::Touchpad])
 	{
 		pad.wButtons |= XINPUT_GAMEPAD_BACK;
 	}
@@ -610,7 +609,7 @@ static void PublishPadFrame()
 
 		for (size_t button = 0; button < snapshot.buttons.size(); button++)
 		{
-			snapshot.buttons[button] = controller.GetButtonValue((EPadButton)button);
+			snapshot.buttons[button] = controller.GetButtonValue((xanthus::EPadButton)button);
 		}
 
 		snapshot.leftX = SDL_GetGamepadAxis(controller.controller, SDL_GAMEPAD_AXIS_LEFTX);

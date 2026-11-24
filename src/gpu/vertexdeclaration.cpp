@@ -3,9 +3,11 @@
 #include "xanthus/gpu/vertexshader.h"
 #include <xxHashMap.h>
 #include <kernel/heap.h>
+#include "kernel/memory.h"
 #include <algorithm>
 #include "render_commands.h"
 #include "FixedFunction.h"
+#include "xshader_api.h"
 
 static Mutex g_vertexDeclarationMutex;
 static xxHashMap<GuestVertexDeclaration*> g_vertexDeclarations;

@@ -1,6 +1,5 @@
-﻿#ifdef _MSC_VER
-#include <stdafx.h>
-#endif
+﻿#include "platform/compat.h"
+
 #include <cpu/guest_thread.h>
 #include "io/file_system.h"
 #include <gpu/video.h>

@@ -1,9 +1,8 @@
 #include "file_system.h"
 #include <kernel/kernel.h>
 #include <kernel/function.h>
-#ifdef _MSC_VER
-#include <stdafx.h>
-#endif
+#include "platform/compat.h"
+
 #include <iostream>
 #include <xanthus/utility.hpp>
 

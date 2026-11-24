@@ -1,8 +1,10 @@
+#include <linux/limits.h>
 #include <platform/process.h>
 
 #include <signal.h>
 
-std::filesystem::path os::process::GetExecutablePath()
+namespace os::process {
+std::filesystem::path GetExecutablePath()
 {
     char exePath[PATH_MAX] = {};
     if (readlink("/proc/self/exe", exePath, PATH_MAX) > 0)
@@ -15,12 +17,12 @@ std::filesystem::path os::process::GetExecutablePath()
     }
 }
 
-std::filesystem::path os::process::GetExecutableRoot()
+std::filesystem::path GetExecutableRoot()
 {
     return GetExecutablePath().remove_filename();
 }
 
-std::filesystem::path os::process::GetWorkingDirectory()
+std::filesystem::path GetWorkingDirectory()
 {
     char cwd[PATH_MAX] = {};
     char *res = getcwd(cwd, sizeof(cwd));
@@ -34,12 +36,12 @@ std::filesystem::path os::process::GetWorkingDirectory()
     }
 }
 
-bool os::process::SetWorkingDirectory(const std::filesystem::path& path)
+bool SetWorkingDirectory(const std::filesystem::path& path)
 {
     return chdir(path.c_str()) == 0;
 }
 
-bool os::process::StartProcess(const std::filesystem::path& path, const std::vector<std::string>& args, std::filesystem::path work)
+bool StartProcess(const std::filesystem::path& path, const std::vector<std::string>& args, std::filesystem::path work)
 {
     pid_t pid = fork();
     if (pid < 0)
@@ -66,12 +68,13 @@ bool os::process::StartProcess(const std::filesystem::path& path, const std::vec
     return true;
 }
 
-void os::process::CheckConsole()
+void CheckConsole()
 {
     g_consoleVisible = false;
 }
 
-void os::process::ShowConsole()
+void ShowConsole()
 {
     g_consoleVisible = true;
+}
 }

@@ -64,6 +64,11 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/SDL_mixer)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/o1heap)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/smolv)
 
+target_include_directories(XShaderRecompLib PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/XShaderRecomp/XShaderRecomp/lib
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/XShaderRecomp/XShaderRecomp/lib/include
+)
+
 target_include_directories(plume PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/DirectX-Headers/include/dxguids
 )
@@ -138,4 +143,5 @@ target_link_libraries(xanthus PRIVATE
     fmt::fmt
     unordered_dense
     plume
+    XShaderRecompLib
 )
